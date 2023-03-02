@@ -1,0 +1,18 @@
+server:
+  port: 8030
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://159.75.110.59:3306/demo?characterEncoding=UTF-8&useSSL=true&serverTimezone=UTC
+    username: demo
+    password: 1234
+
+mybatis:
+  configuration:
+    #??mybatis???????????
+    map-underscore-to-camel-case: true
+
+filter:
+  config:
+    excludeUrls: /auth/login
