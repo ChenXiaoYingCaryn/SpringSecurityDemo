@@ -3,6 +3,7 @@ package com.example.springsecuritydemo3.controller;
 import com.example.springsecuritydemo3.common.CommonResult;
 import com.example.springsecuritydemo3.pojo.dto.UserDto;
 import com.example.springsecuritydemo3.pojo.dto.UserRegisterDto;
+import com.example.springsecuritydemo3.pojo.vo.PhoneVo;
 import com.example.springsecuritydemo3.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,14 +17,14 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/findPhoneByUsername")
-    public CommonResult<String> findPhoneByUsername (String username){
-        String phone;
+    public CommonResult<PhoneVo> findPhoneByUsername (String username){
+        PhoneVo vo;
         try {
-            phone = userService.findPhoneByUsername(username);
+            vo = userService.findPhoneByUsername(username);
         }catch (Exception e){
             return CommonResult.failed(e.getMessage());
         }
-        return CommonResult.success(phone);
+        return CommonResult.success(vo);
     }
 
     @PostMapping("/logout")

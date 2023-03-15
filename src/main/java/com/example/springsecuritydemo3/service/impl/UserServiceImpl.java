@@ -7,6 +7,7 @@ import com.example.springsecuritydemo3.factory.UserFactory;
 import com.example.springsecuritydemo3.pojo.dto.UserDto;
 import com.example.springsecuritydemo3.pojo.dto.UserRegisterDto;
 import com.example.springsecuritydemo3.pojo.po.UserPo;
+import com.example.springsecuritydemo3.pojo.vo.PhoneVo;
 import com.example.springsecuritydemo3.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -37,18 +38,18 @@ public class UserServiceImpl implements UserService {
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public String findPhoneByUsername(java.lang.String username) {
-        String phone = "";
+    public PhoneVo findPhoneByUsername(String username) {
+        PhoneVo vo;
         try{
-            phone = userDao.findPhoneByUsername(username);
+            vo = userDao.findPhoneByUsername(username);
         }catch (Exception e){
             throw new RuntimeException(e.getMessage());
         }
-        return phone;
+        return vo;
     }
 
     @Override
-    public String logout(java.lang.String username) {
+    public String logout(String username) {
         String token = "";
         try{
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);

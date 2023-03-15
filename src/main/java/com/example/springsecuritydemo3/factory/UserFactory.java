@@ -18,7 +18,13 @@ public class UserFactory {
         }
 
         UserPo userPo = list.get(0);
-        UserVo user = new UserVo(userPo.getUserId(), userPo.getUserName(),userPo.getPassword(), userPo.getPhone(), roles);
+        UserVo user = new UserVo(
+                userPo.getUserId(),
+                userPo.getUserName(),
+                userPo.getPassword(),
+                userPo.getCountryCode(),
+                userPo.getPhone(),
+                roles);
         return user;
     }
 
@@ -26,6 +32,7 @@ public class UserFactory {
         UserPo userPo = new UserPo(
                 userRegisterDto.getUserName(),
                 userRegisterDto.getPassword(),
+                userRegisterDto.getCountryCode(),
                 userRegisterDto.getPhone(),
                 roleId
         );

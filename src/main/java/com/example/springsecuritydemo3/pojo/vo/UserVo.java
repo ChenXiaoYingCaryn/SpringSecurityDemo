@@ -20,6 +20,7 @@ public class UserVo implements UserDetails {
     private Long id;
     private String username;
     private String password;
+    private String countryCode;
 
     private String phone;
     private Set<RoleVo> roles;

@@ -2,6 +2,7 @@ package com.example.springsecuritydemo3.service;
 
 import com.example.springsecuritydemo3.pojo.dto.UserDto;
 import com.example.springsecuritydemo3.pojo.dto.UserRegisterDto;
+import com.example.springsecuritydemo3.pojo.vo.PhoneVo;
 
 public interface UserService {
 
@@ -10,14 +11,14 @@ public interface UserService {
      * @param username
      * @return
      */
-    String findPhoneByUsername(java.lang.String username);
+    PhoneVo findPhoneByUsername(String username);
 
     /**
      * 用户登出
      * @param username
      * @return
      */
-    String logout(java.lang.String username);
+    String logout(String username);
 
     /**
      * 登录
