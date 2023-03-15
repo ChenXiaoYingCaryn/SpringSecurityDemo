@@ -17,22 +17,45 @@ public class UserController {
 
     @PostMapping("/findPhoneByUsername")
     public CommonResult<String> findPhoneByUsername (String username){
-        return userService.findPhoneByUsername(username);
+        String phone;
+        try {
+            phone = userService.findPhoneByUsername(username);
+        }catch (Exception e){
+            return CommonResult.failed(e.getMessage());
+        }
+        return CommonResult.success(phone);
     }
 
     @PostMapping("/logout")
     public  CommonResult<String> logout(String username){
-        return userService.logout(username);
+        String token;
+        try {
+            token = userService.logout(username);
+        }catch (Exception e){
+            return CommonResult.failed(e.getMessage());
+        }
+        return CommonResult.success(token);
     }
 
     @PostMapping("/login")
-    public CommonResult<UserDto> login(UserDto userDto){
-        return userService.login(userDto);
+    public CommonResult<String> login(UserDto userDto){
+        String token;
+        try {
+            token = userService.login(userDto);
+        }catch (Exception e){
+            return CommonResult.failed(e.getMessage());
+        }
+        return CommonResult.success(token);
     }
 
     @PostMapping("/register")
-    public CommonResult<UserRegisterDto> register(UserRegisterDto userRegisterDto){
-        return userService.register(userRegisterDto);
+    public CommonResult<String> register(UserRegisterDto userRegisterDto){
+        try {
+            userService.register(userRegisterDto);
+        }catch (Exception e){
+            return CommonResult.failed(e.getMessage());
+        }
+        return CommonResult.success("注册成功");
     }
 
 }

@@ -1,6 +1,5 @@
 package com.example.springsecuritydemo3.service.impl;
 
-import com.example.springsecuritydemo3.common.CommonResult;
 import com.example.springsecuritydemo3.component.JwtTokenProvider;
 import com.example.springsecuritydemo3.dao.RoleDao;
 import com.example.springsecuritydemo3.dao.UserDao;
@@ -38,37 +37,32 @@ public class UserServiceImpl implements UserService {
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public CommonResult getPassword(String password) {
-        return CommonResult.success(passwordEncoder.encode(password));
-    }
-
-    @Override
-    public CommonResult findPhoneByUsername(String username) {
+    public String findPhoneByUsername(java.lang.String username) {
         String phone = "";
         try{
             phone = userDao.findPhoneByUsername(username);
         }catch (Exception e){
-            return CommonResult.failed(e.getMessage());
+            throw new RuntimeException(e.getMessage());
         }
-        return CommonResult.success(phone);
+        return phone;
     }
 
     @Override
-    public CommonResult logout(String username) {
+    public String logout(java.lang.String username) {
         String token = "";
         try{
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
             token = jwtTokenProvider.logout(userDetails);
             userDao.updateUserStatus(token, username);
         } catch (AuthenticationException e) {
-            return CommonResult.failed(e.getMessage());
+            throw new RuntimeException(e.getMessage());
         }
-        return CommonResult.success("logout success");
+        return token;
     }
 
     @Override
-    public CommonResult login(UserDto userDto) {
-        String token = "";
+    public java.lang.String login(UserDto userDto) {
+        java.lang.String token = "";
         try {
             UserDetails userDetails = userDetailsService.loadUserByUsername(userDto.getUsername());
             if (!passwordEncoder.matches(userDto.getPassword(), userDetails.getPassword())) {
@@ -79,14 +73,14 @@ public class UserServiceImpl implements UserService {
             token = jwtTokenProvider.generateToken(userDetails);
             userDao.updateUserStatus(token, userDetails.getUsername());
         } catch (AuthenticationException e) {
-            return CommonResult.failed(e.getMessage());
+            throw new RuntimeException(e.getMessage());
         }
-        return CommonResult.success(token);
+        return token;
     }
 
     @Transactional
     @Override
-    public CommonResult register(UserRegisterDto userRegisterDto) {
+    public void register(UserRegisterDto userRegisterDto) {
         userRegisterDto.setPassword(passwordEncoder.encode(userRegisterDto.getPassword()));
         UserPo userPo = UserFactory.UserRegisterDtoToUserPo(userRegisterDto, 2L);
         try{
@@ -96,6 +90,5 @@ public class UserServiceImpl implements UserService {
         }catch (Exception e){
             throw new RuntimeException(e.getMessage());
         }
-        return CommonResult.success("register success");
     }
 }

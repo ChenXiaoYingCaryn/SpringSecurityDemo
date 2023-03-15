@@ -1,6 +1,5 @@
 package com.example.springsecuritydemo3.service.impl;
 
-import com.example.springsecuritydemo3.common.CommonResult;
 import com.example.springsecuritydemo3.dao.LogDao;
 import com.example.springsecuritydemo3.pojo.po.LogPo;
 import com.example.springsecuritydemo3.pojo.vo.LogVo;
@@ -23,25 +22,25 @@ public class LogServiceImpl implements LogService {
     private static final Logger logger = LoggerFactory.getLogger(LogServiceImpl.class);
 
     @Override
-    public CommonResult queryUserOperationLogByUsername(String username) {
+    public List<LogVo> queryUserOperationLogByUsername(String username) {
         List<LogVo> list;
         try {
             list = logDao.queryUserOperationLogByUsername(username);
         }catch (Exception e){
-            return CommonResult.failed(e.getMessage());
+            throw new RuntimeException(e.getMessage());
         }
-        return CommonResult.success(list);
+        return list;
     }
 
     @Override
-    public CommonResult queryUserOperationLog() {
+    public List<LogVo> queryUserOperationLog() {
         List<LogVo> list;
         try {
             list = logDao.queryUserOperationLog();
         }catch (Exception e){
-            return CommonResult.failed(e.getMessage());
+            throw new RuntimeException(e.getMessage());
         }
-        return CommonResult.success(list);
+        return list;
     }
 
     @Override
