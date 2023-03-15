@@ -15,12 +15,12 @@ public class LogController {
     private LogService logService;
 
     @GetMapping("/queryUserOperationLogByUsername")
-    public CommonResult queryUserOperationLogByUsername(String username){
+    public CommonResult<String> queryUserOperationLogByUsername(String username){
         return logService.queryUserOperationLogByUsername(username);
     }
 
     @GetMapping("/queryUserOperationLog")
-    public CommonResult queryUserOperationLog(){
+    public CommonResult<String> queryUserOperationLog(){
         return logService.queryUserOperationLog();
     }
 

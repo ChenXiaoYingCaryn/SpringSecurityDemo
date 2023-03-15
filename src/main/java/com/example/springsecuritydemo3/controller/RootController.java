@@ -16,7 +16,7 @@ public class RootController {
     private UserService userService;
 
     @PostMapping("/forcedToLogOut")
-    public CommonResult forcedToLogOut(String username){
+    public CommonResult<String> forcedToLogOut(String username){
         return userService.logout(username);
     }
 }
