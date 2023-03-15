@@ -9,7 +9,7 @@ import java.util.List;
 @Mapper
 public interface UserDao {
 
-    @Select("SELECT country_code, phone FROM db_user WHERE use_name = #{username}")
+    @Select("SELECT country_code, phone FROM db_user WHERE user_name = #{username}")
     PhoneVo findPhoneByUsername(String username);
 
     @Update("UPDATE db_user_status SET token = #{token} where user_name = #{username}")
