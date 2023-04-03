@@ -3,8 +3,16 @@ package com.example.springsecuritydemo3.service;
 import com.example.springsecuritydemo3.pojo.dto.UserDto;
 import com.example.springsecuritydemo3.pojo.dto.UserRegisterDto;
 import com.example.springsecuritydemo3.pojo.vo.PhoneVo;
+import com.example.springsecuritydemo3.pojo.vo.UserMsgVo;
 
 public interface UserService {
+
+    /**
+     * 根据用户名获取用户信息
+     * @param username
+     * @return
+     */
+    UserMsgVo getUserMsg(String username);
 
     /**
      * 根据用户名查询手机号

@@ -34,15 +34,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
         http.cors().and().csrf().disable()
                 .authorizeRequests()
+                .antMatchers("/login", "/logout", "/register").permitAll()
                 .antMatchers("/test/**").permitAll()
                 .antMatchers("/user/**").hasRole("user")
                 .antMatchers("/log/**").hasAnyRole("admin","root")
                 .antMatchers("/root/**").hasRole("root")
                 .anyRequest().authenticated();
         // 添加 JWT 过滤器
-        http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterAfter(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
     @Override
@@ -56,9 +58,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers(
                 "/swagger-ui.html",
-                "/user/login",
-                "/user/logout",
-                "/user/register",
+                "/login",
+                "/logout",
+                "/register",
                 "/user/getPassword",
                 "/css/**",
                 "/js/**",

@@ -8,6 +8,7 @@ import com.example.springsecuritydemo3.pojo.dto.UserDto;
 import com.example.springsecuritydemo3.pojo.dto.UserRegisterDto;
 import com.example.springsecuritydemo3.pojo.po.UserPo;
 import com.example.springsecuritydemo3.pojo.vo.PhoneVo;
+import com.example.springsecuritydemo3.pojo.vo.UserMsgVo;
 import com.example.springsecuritydemo3.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -18,6 +19,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -36,6 +39,18 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Override
+    public UserMsgVo getUserMsg(String username) {
+        List<UserPo> list;
+        try{
+            list = userDao.getUserByUsername(username);
+        }catch (Exception e){
+            throw new RuntimeException(e.getMessage());
+        }
+        UserMsgVo vo = UserFactory.UserPoToUserMsgVo(list);
+        return vo;
+    }
 
     @Override
     public PhoneVo findPhoneByUsername(String username) {
@@ -62,8 +77,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public java.lang.String login(UserDto userDto) {
-        java.lang.String token = "";
+    public String login(UserDto userDto) {
+        String token = "";
         try {
             UserDetails userDetails = userDetailsService.loadUserByUsername(userDto.getUsername());
             if (!passwordEncoder.matches(userDto.getPassword(), userDetails.getPassword())) {

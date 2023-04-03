@@ -30,6 +30,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
+
         try {
             // 1.从 HTTP 请求中获取 JWT 令牌
             String jwt = getJwtFromRequest(httpServletRequest);
@@ -51,7 +52,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            throw new RuntimeException(ex.getMessage());
         }
 
         filterChain.doFilter(httpServletRequest, httpServletResponse);
