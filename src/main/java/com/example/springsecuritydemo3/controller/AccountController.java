@@ -31,11 +31,8 @@ public class AccountController {
     public CommonResult<LogoutVo> logout(String username, HttpServletResponse response){
         String token;
         LogoutVo vo = new LogoutVo();
-        try {
-            token = userService.logout(username);
-        }catch (Exception e){
-            return CommonResult.failed(e.getMessage());
-        }
+
+        token = userService.logout(username);
 
         Cookie cookie = new Cookie("token", token);
         cookie.setDomain("backend.mihoyo.com"); // 设置可信域
@@ -49,12 +46,9 @@ public class AccountController {
     public CommonResult<UserMsgVo> login(UserDto userDto, HttpServletResponse response){
         String token;
         UserMsgVo vo;
-        try {
-            token = userService.login(userDto);
-            vo = userService.getUserMsg(userDto.getUsername());
-        }catch (Exception e){
-            return CommonResult.failed(e.getMessage());
-        }
+
+        token = userService.login(userDto);
+        vo = userService.getUserMsg(userDto.getUsername());
 
         Cookie cookie = new Cookie("token", token);
         cookie.setDomain("backend.mihoyo.com"); // 设置可信域
@@ -66,13 +60,8 @@ public class AccountController {
 
     @PostMapping("/register")
     public CommonResult<UserMsgVo> register(UserRegisterDto userRegisterDto){
-        UserMsgVo vo;
-        try {
-            userService.register(userRegisterDto);
-            vo = userService.getUserMsg(userRegisterDto.getUserName());
-        }catch (Exception e){
-            return CommonResult.failed(e.getMessage());
-        }
+        userService.register(userRegisterDto);
+        UserMsgVo vo = userService.getUserMsg(userRegisterDto.getUserName());
         return CommonResult.success(vo);
     }
 }

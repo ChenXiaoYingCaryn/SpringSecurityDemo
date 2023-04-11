@@ -17,12 +17,7 @@ public class RootController {
 
     @PostMapping("/forcedToLogOut")
     public CommonResult<String> forcedToLogOut(String username){
-        String token;
-        try {
-            token = userService.logout(username);
-        }catch (Exception e){
-            return CommonResult.failed(e.getMessage());
-        }
+        String token = userService.logout(username);
         return CommonResult.success(token);
     }
 }

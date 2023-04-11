@@ -18,12 +18,7 @@ public class UserController {
 
     @PostMapping("/findPhoneByUsername")
     public CommonResult<PhoneVo> findPhoneByUsername (String username){
-        PhoneVo vo;
-        try {
-            vo = userService.findPhoneByUsername(username);
-        }catch (Exception e){
-            return CommonResult.failed(e.getMessage());
-        }
+        PhoneVo vo = userService.findPhoneByUsername(username);
         return CommonResult.success(vo);
     }
 

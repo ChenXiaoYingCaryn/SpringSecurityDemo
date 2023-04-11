@@ -19,23 +19,13 @@ public class LogController {
 
     @GetMapping("/queryUserOperationLogByUsername")
     public CommonResult<List<LogVo>> queryUserOperationLogByUsername(String username){
-        List<LogVo> res;
-        try {
-            res = logService.queryUserOperationLogByUsername(username);
-        }catch (Exception e){
-            return CommonResult.failed(e.getMessage());
-        }
+        List<LogVo> res = logService.queryUserOperationLogByUsername(username);
         return CommonResult.success(res);
     }
 
     @GetMapping("/queryUserOperationLog")
     public CommonResult<List<LogVo>> queryUserOperationLog(){
-        List<LogVo> res;
-        try {
-            res = logService.queryUserOperationLog();
-        }catch (Exception e){
-            return CommonResult.failed(e.getMessage());
-        }
+        List<LogVo> res = logService.queryUserOperationLog();
         return CommonResult.success(res);
     }
 
