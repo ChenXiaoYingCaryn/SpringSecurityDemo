@@ -31,6 +31,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
 
+        if(httpServletRequest.getRequestURL().equals("/login")){
+            return;
+        }
+
         try {
             // 1.从 HTTP 请求中获取 JWT 令牌
             String jwt = getJwtFromRequest(httpServletRequest);
